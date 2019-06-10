@@ -1,15 +1,21 @@
 from rest_framework import serializers
 
-from .models import MarketSummary, Coin
+from .models import Coin, Market, Ticket
 
 
-class CoinSerializer(serializers.HyperlinkedModelSerializer):
+class CoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coin
-        fields = ('name', 'code')
+        fields = ('code', 'name')
 
 
-class MarketSummarySerializer(serializers.HyperlinkedModelSerializer):
+class MarketSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MarketSummary
-        fields = ('name', 'high', 'low', 'volumn', 'timestamp')
+        model = Market
+        fields = ('code', 'coin', 'unit')
+
+
+class TicketSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ticket
+        fields = ('market', 'price', 'volumn', 'timestamp', 'sequence')

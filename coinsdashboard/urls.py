@@ -17,12 +17,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from controlcenter.views import controlcenter
 
-from api.urls import router as api_router
+from api.urls import urlpatterns as api_urlpatterns
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^dashboard/', controlcenter.urls),
-    url(r'^api/', include(api_router.urls)),
+    url(r'^api/', include(api_urlpatterns, namespace='api')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
