@@ -1,0 +1,12 @@
+<table width="100%" class="table table-bordered table-hover" id="frc-allocations-table">
+    <thead>
+        <tr>
+            <th>Car</th>
+            {% for hour in deployment_context.hour_range %}
+                <th>{{hour}}:00</th>
+            {% endfor %}
+            <th>Utilization</th>
+        </tr>
+    </thead>
+</table>
+<!-- /.table-responsive -->

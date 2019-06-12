@@ -15,14 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from controlcenter.views import controlcenter
+from django.contrib.auth.views import login, logout
 
 from api.urls import urlpatterns as api_urlpatterns
-
+from dashboard.urls import urlpatterns as dashboard_urlpatterns
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^dashboard/', controlcenter.urls),
     url(r'^api/', include(api_urlpatterns, namespace='api')),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^dashboard/', include(dashboard_urlpatterns, namespace='dashboard')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    url(r'^login/$', login, {'template_name': 'login.html'}, name="login"),
+    url(r'^logout/$', logout, name="logout"),
 ]

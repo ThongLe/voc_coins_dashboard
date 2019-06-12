@@ -1,0 +1,12 @@
+<table width="100%" class="table table-bordered table-hover" id="sector-allocations-table">
+    <thead>
+        <tr>
+            <th>Sector</th>
+            {% for hour in deployment_context.hour_range %}
+                <th>{{hour}}:00</th>
+            {% endfor %}
+            <th>Risk</th>
+        </tr>
+    </thead>
+</table>
+<!-- /.table-responsive -->

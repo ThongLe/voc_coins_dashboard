@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'controlcenter',
+    'widget_tweaks',
     'djcelery',
     'rest_framework',
-    'api'
+    'api',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -56,10 +57,18 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'coinsdashboard.urls'
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/dashboard'
+LOGOUT_REDIRECT_URL = '/login/'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'coinsdashboard', 'templates'),
+            os.path.join(BASE_DIR, 'dashboard', 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,10 +144,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
-CONTROLCENTER_DASHBOARDS = (
-    ('mydash', 'dashboards.views.MyDashboard'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    ('auth', os.path.join(BASE_DIR, 'coinsdashboard', 'static').replace('\\', '/')),
+    ('dashboard', os.path.join(BASE_DIR, 'dashboard', 'static').replace('\\', '/')),
 )
+
 
 # Message Queue
 CELERY_BROKER_URL = 'redis://localhost:6379'
