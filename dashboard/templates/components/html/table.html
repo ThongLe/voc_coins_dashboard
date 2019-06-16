@@ -1,0 +1,10 @@
+<table width="100%" class="table table-striped table-bordered table-hover"
+       class="datatable" id="{{ id }}" source-url="{{ url }}" method="{{ method }}">
+    <thead>
+        <tr>
+            {% for column in columns %}
+                <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+</table>

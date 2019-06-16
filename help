@@ -1,0 +1,5 @@
+start flower:
+celery flower -A coinsdashboard --address=127.0.0.1 --port=5555 --basic_auth=tonyle:admin123
+
+start celery worker:
+celery -A coinsdashboard worker -l info

@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: mydatabase
+  redis:
+    image: redis
+  web:
+    build: .
+    environment:
+      DJANGO_SETTINGS_MODULE: "coinsdashboard.settings.test"
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    command: ["./wait-for-it.sh", "db:5432", "--", "sh", "start_server.sh"]

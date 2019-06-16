@@ -1,1 +1,0 @@
-$('#academicUploadForm').submit(uploadFiles);

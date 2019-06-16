@@ -1,0 +1,9 @@
+<table width="100%" class="datatable" id="{{ id }}" source-url="{{ url }}" method="{{ method }}">
+    <thead>
+        <tr>
+            {% for column in columns %}
+                <th>{{ column }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+</table>

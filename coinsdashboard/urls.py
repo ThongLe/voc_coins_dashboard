@@ -21,11 +21,10 @@ from api.urls import urlpatterns as api_urlpatterns
 from dashboard.urls import urlpatterns as dashboard_urlpatterns
 
 urlpatterns = [
+    url(r'^', include(dashboard_urlpatterns, namespace='dashboards')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(api_urlpatterns, namespace='api')),
-    url(r'^dashboard/', include(dashboard_urlpatterns, namespace='dashboard')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
     url(r'^login/$', login, {'template_name': 'login.html'}, name="login"),
     url(r'^logout/$', logout, name="logout"),
 ]

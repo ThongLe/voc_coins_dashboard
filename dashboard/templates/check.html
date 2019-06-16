@@ -13,33 +13,19 @@
     <script type="text/javascript" charset="utf8" src="{% static 'js/djdatatableview.js' %}"></script>
 {% endblock %}
 
-{% block title_page %}Dashboard{% endblock %}
+{% block title_page %}Check{% endblock %}
 
 {% block main %}
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Coins
+                    Check Query
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    {{table_coins|safe}}
-                </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-        </div>
-
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Markets
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    {{table_markets|safe}}
+                    {{table_check_queries|safe}}
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -56,17 +42,14 @@
 
     <script type="text/javascript">
         $(function(){
-            djdatatableview.initialize('table_coins', {
+            djdatatableview.initialize('table_check_queries', {
                 columns: [
-                    {data: 'code'},
                     {data: 'name'},
-                ]
-            });
-            djdatatableview.initialize('table_markets', {
-                columns: [
-                    {data: 'code'},
-                    {data: 'coin'},
-                    {data: 'unit'},
+                    {data: 'params'},
+                    {data: 'result'},
+                    {data: 'expected'},
+                    {data: 'created_at'},
+                    {data: 'passed'},
                 ]
             });
         });

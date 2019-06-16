@@ -1,16 +1,23 @@
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from django.http import JsonResponse
 
-from .models import Coin, Market, Ticket
+from .models import Coin
+from .models import Market
+from .models import Ticket
+from .models import QueryTest
+
 from .serializers import CoinSerializer
 from .serializers import MarketSerializer
 from .serializers import TicketSerializer
+from .serializers import QueryTestSerializer
 from .tasks import store_coin_price
 
 from . import cacher
+from . import forms
 
 
 class CoinViewSet(viewsets.ModelViewSet):
@@ -43,6 +50,17 @@ class MarketViewSet(viewsets.ModelViewSet):
             except Exception as ex:
                 None
         return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset().select_related('coin'))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class TicketViewSet(viewsets.ModelViewSet):
@@ -82,3 +100,24 @@ def moving_average(request):
         return JsonResponse({'ma': total / ma})
 
     return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+
+class QueryTestsViewSet(viewsets.ModelViewSet):
+    queryset = QueryTest.objects.all().order_by('id')
+    serializer_class = QueryTestSerializer
+
+    @action(detail=False, methods=['GET'])
+    def check_query(self, request):
+        query_test_form = forms.QueryTestForm(request.GET)
+        if query_test_form.is_valid():
+            result = 'b'
+            if result != query_test_form.cleaned_data['expected']:
+                query_test = QueryTest(result=result, passed=False, **query_test_form.cleaned_data)
+                query_test.save()
+
+                serializer = self.get_serializer(query_test)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(status=status.HTTP_200_OK)
+
+        return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)

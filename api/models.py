@@ -47,3 +47,14 @@ class Ticket(TimeStampedModel):
 
     def __str__(self):
         return '{}:{}'.format(self.market, self.sequence)
+
+
+class QueryTest(TimeStampedModel):
+    name = models.CharField(max_length=128)
+    params = models.TextField(default='')
+    result = models.CharField(max_length=128)
+    expected = models.CharField(max_length=128)
+    passed = models.BooleanField()
+
+    def __str__(self):
+        return '{}:{}'.format(self.id, self.name)
