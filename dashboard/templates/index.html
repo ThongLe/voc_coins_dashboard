@@ -18,32 +18,47 @@
 {% block main %}
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Coins
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Coins
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            {{table_coins|safe}}
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
                 </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    {{table_coins|safe}}
-                </div>
-                <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Markets
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            {{table_markets|safe}}
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Markets
+                    Tickers
                 </div>
-                <!-- /.panel-heading -->
                 <div class="panel-body">
-                    {{table_markets|safe}}
+                    {{table_tickers|safe}}
                 </div>
-                <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
         </div>
     </div>
 {% endblock main %}
@@ -55,19 +70,29 @@
     <script src="{% static 'dashboard/vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
 
     <script type="text/javascript">
+        var tables = {};
         $(function(){
-            djdatatableview.initialize('table_coins', {
+            tables.coins = djdatatableview.initialize('table_coins', {
                 columns: [
                     {data: 'code'},
                     {data: 'name'},
                 ]
             });
-            djdatatableview.initialize('table_markets', {
+            tables.markets = djdatatableview.initialize('table_markets', {
                 columns: [
                     {data: 'code'},
                     {data: 'coin'},
                     {data: 'unit'},
                 ]
+            });
+            tables.tickers = djdatatableview.initialize('table_tickers', {
+                columns: [
+                    {data: 'market'},
+                    {data: 'price'},
+                    {data: 'volumn'},
+                    {data: 'date'},
+                    {data: 'sequence'},
+                ],
             });
         });
     </script>

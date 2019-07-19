@@ -6,4 +6,4 @@ from .models import QueryTest
 class QueryTestForm(forms.ModelForm):
     class Meta:
         model = QueryTest
-        fields = ('name', 'params', 'expected')
+        fields = ('func', 'params', 'expected')

@@ -38,11 +38,11 @@ class Market(TimeStampedModel):
         super(self.__class__, self).save()
 
 
-class Ticket(TimeStampedModel):
-    market = models.ForeignKey(Market, related_name='tickets')
+class Ticker(TimeStampedModel):
+    market = models.ForeignKey(Market, related_name='tickers')
     price = models.FloatField()
     volumn = models.FloatField()
-    timestamp = models.DateTimeField()
+    date = models.DateField()
     sequence = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
@@ -50,11 +50,11 @@ class Ticket(TimeStampedModel):
 
 
 class QueryTest(TimeStampedModel):
-    name = models.CharField(max_length=128)
+    func = models.CharField(max_length=128)
     params = models.TextField(default='')
     result = models.CharField(max_length=128)
     expected = models.CharField(max_length=128)
     passed = models.BooleanField()
 
     def __str__(self):
-        return '{}:{}'.format(self.id, self.name)
+        return '{}:{}'.format(self.id, self.func)

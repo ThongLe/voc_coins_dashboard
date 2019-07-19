@@ -21,6 +21,11 @@ def dashboard(request):
             url=reverse('api:market-list', kwargs={'format': 'json'}),
             columns=['code', 'coin', 'unit']
         ),
+        table_tickers=DashboardTable(
+            id='table_tickers',
+            url=reverse('api:ticker-list', kwargs={'format': 'json'}),
+            columns=['market', 'price', 'volumn', 'date', 'sequence']
+        )
     )
     return render(request, 'index.html', context)
 

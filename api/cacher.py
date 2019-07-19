@@ -3,7 +3,7 @@ from django.db.models import Max
 
 from .models import Coin
 from .models import Market
-from .models import Ticket
+from .models import Ticker
 
 
 def cache_coin(coin):
@@ -42,7 +42,7 @@ def get_sequence(market_code):
     sequence = cache.get('market:{}:sequence'.format(market_code))
     if sequence is None:
         sequence = \
-            Ticket\
+            Ticker\
             .objects\
             .filter(market__code=market_code)\
             .aggregate(Max('sequence'))\
@@ -53,7 +53,7 @@ def get_sequence(market_code):
 def get_ticket(market_code, sequence):
     ticket = cache.get('market:{}:ticket:{}'.format(market_code, sequence))
     if ticket is None:
-        ticket = Ticket.objects.get(market__code=market_code, sequence=sequence)
+        ticket = Ticker.objects.get(market__code=market_code, sequence=sequence)
     return ticket
 
 
@@ -63,7 +63,7 @@ def get_tickets(market_code, sequences):
     if cached_tickets.__len__() == sequences.__len__():
         return cached_tickets
 
-    db_tickets = Ticket.objects.filter(market__code=market_code, sequence__in=sequences)
+    db_tickets = Ticker.objects.filter(market__code=market_code, sequence__in=sequences)
 
     tickets = [None] * sequences.__len__()
 

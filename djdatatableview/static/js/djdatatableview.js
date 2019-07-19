@@ -4,7 +4,7 @@ var djdatatableview = (function(){
     function initialize(name, opts) {
         var els = $('#' + name);
         var options = djdatatableview.getOptions(els[0], opts)
-        els.DataTable(options)
+        return els.DataTable(options);
     }
 
     function getOptions(dtview, opts) {

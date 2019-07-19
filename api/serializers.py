@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Coin, Market, Ticket, QueryTest
+from .models import Coin, Market, Ticker, QueryTest
 
 
 class CoinSerializer(serializers.ModelSerializer):
@@ -15,13 +15,15 @@ class MarketSerializer(serializers.ModelSerializer):
         fields = ('code', 'coin', 'unit')
 
 
-class TicketSerializer(serializers.ModelSerializer):
+class TickerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Ticket
-        fields = ('market', 'price', 'volumn', 'timestamp', 'sequence')
+        model = Ticker
+        fields = ('market', 'price', 'volumn', 'date', 'sequence')
 
 
 class QueryTestSerializer(serializers.ModelSerializer):
+    params = serializers.JSONField()
+
     class Meta:
         model = QueryTest
-        fields = ['name', 'params', 'result', 'expected', 'created_at', 'passed']
+        fields = ['func', 'params', 'result', 'expected', 'created_at', 'passed']
